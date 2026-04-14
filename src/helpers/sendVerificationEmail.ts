@@ -11,8 +11,11 @@ export async function sendVerificationEmai(
 ): Promise<ApiResponse>{
     try {
     await resend.emails.send({
-        from:""
-    })
+      from: 'onboarding@resend.dev',
+      to: email,
+      subject: 'Gostack Verification Code',
+      react: VerificationEmail({ username, otp: verifyCode }),
+    });
         return {success: true , message: ' verification email send successfully'}
     } catch (emailError) {
         console.error("Error sending verification email" , emailError)
