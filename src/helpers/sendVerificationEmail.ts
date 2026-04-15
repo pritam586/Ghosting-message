@@ -4,7 +4,7 @@ import { ApiResponse } from "@/types/ApiResponse"
 import { promises } from "dns"
 import { success } from "zod"
 
-export async function sendVerificationEmai(
+export async function sendVerificationEmail(
     email: string,
     username: string,
     verifyCode: string
