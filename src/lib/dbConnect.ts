@@ -26,3 +26,8 @@ async function dbConnect(): Promise<void>{
 }
 
 export default dbConnect
+
+//Note Next js is edge case and it will create multiple instances of
+//  the app and each instance will create a new connection to the database.
+//  To avoid this we can use a global variable to store the connection status and
+//  check it before creating a new connection.
