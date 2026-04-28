@@ -12,8 +12,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 import { signInSchema } from '@/schemas/signInSchema';
 
 export default function SignInForm() {
@@ -27,6 +29,7 @@ export default function SignInForm() {
     },
   });
 
+  const { toast } = useToast();
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const result = await signIn('credentials', {
       redirect: false,
@@ -36,9 +39,17 @@ export default function SignInForm() {
 
     if (result?.error) {
       if (result.error === 'CredentialsSignin') {
-        console.error('Login Failed: Incorrect username or password');
+        toast({
+          title: 'Login Failed',
+          description: 'Incorrect username or password',
+          variant: 'destructive',
+        });
       } else {
-        console.error('Error:', result.error);
+        toast({
+          title: 'Error',
+          description: result.error,
+          variant: 'destructive',
+        });
       }
     }
 
@@ -64,7 +75,7 @@ export default function SignInForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email/Username</FormLabel>
-                  <input {...field} className="input" />
+                  <Input {...field} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -75,7 +86,7 @@ export default function SignInForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <input type="password" {...field} className="input" />
+                  <Input type="password" {...field} />
                   <FormMessage />
                 </FormItem>
               )}
